@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 export default function Filme(){
   const {id} = useParams();
-  const useHistory = useHistory();
+  const history = useHistory();
   const [filme, setFilme] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -50,7 +50,7 @@ export default function Filme(){
       <div className="botoes">
         <button onClick={()=>{}} > Salvar</button>
         <button>
-          <a target="blank" href={`https>//youtube.com/results?search_query=
+          <a target="blank" href={`https://youtube.com/results?search_query=
           ${filme.nome} Trailer`}>
           Trailer
           </a>
