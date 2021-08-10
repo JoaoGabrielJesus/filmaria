@@ -1,7 +1,9 @@
-import './filme-info.css';
 import { useParams, useHistory } from 'react-router-dom';
-import api from '../../services/api';
 import { useEffect, useState } from 'react';
+import api from '../../services/api';
+import './filme-info.css';
+import {toast} from 'react-toastify';
+
 
 export default function Filme(){
   const {id} = useParams();
@@ -26,10 +28,29 @@ export default function Filme(){
     loadFilme();
 
     return() => {
-      console.log('componente desmontado');
+      console.log('COMPONENTE DESMONTADO');
     }
 
   },[history, id]);
+
+  function salvaFilme(){
+    const minhaLista = localStorage.getItem('filmes');
+    let filmesSalvos = JSON.parse(minhaLista) || [];
+
+    //Se estiver algum filme salvo com esse mesmo id, precisa ignorar...
+    const hasFilme = filmesSalvos.some((filmeSalvo) => filmeSalvo.id === filme.id);
+
+    if(hasFilme){
+      toast.info('Você já possui este filme salvo!')
+      return;
+      //Para a execução do código aqui...
+    }
+
+    filmesSalvos.push(filme);
+    localStorage.setItem('filmes',JSON.stringify(filmesSalvos));
+    toast.success('Filme salvo com sucesso!')
+
+  }
 
   if(loading){
     return(
@@ -48,10 +69,9 @@ export default function Filme(){
       {filme.sinopse}
 
       <div className="botoes">
-        <button onClick={()=>{}} > Salvar</button>
+        <button onClick={salvaFilme} > Salvar</button>
         <button>
-          <a target="blank" href={`https://youtube.com/results?search_query=
-          ${filme.nome} Trailer`}>
+          <a target="blank" href={`https://youtube.com/results?search_query=${filme.nome} Trailer`}>
           Trailer
           </a>
         </button>
