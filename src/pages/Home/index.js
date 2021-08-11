@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './home.css';
 import api from '../../services/api';
 import { Link } from 'react-router-dom';
+import imagemFilmaria from "./../../assets/filmaria.png"
 
 export default function Home() {
   const[filmes, setFilmes] = useState([]);
